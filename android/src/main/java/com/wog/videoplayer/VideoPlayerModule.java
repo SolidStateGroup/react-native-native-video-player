@@ -35,6 +35,7 @@ public class VideoPlayerModule extends ReactContextBaseJavaModule implements Act
     public void showVideoPlayer(String url) {
         Activity currentActivity = getCurrentActivity();
         if (currentActivity != null) {
+            String path = url.replace("file://", "");
             Uri uriForFile = FileProvider.getUriForFile(currentActivity,
                     this.getReactApplicationContext().getPackageName() + ".provider", new File(path));
             Intent videoIntent = new Intent(Intent.ACTION_VIEW);
