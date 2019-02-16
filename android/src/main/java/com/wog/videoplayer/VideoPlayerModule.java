@@ -35,11 +35,12 @@ public class VideoPlayerModule extends ReactContextBaseJavaModule implements Act
     public void showVideoPlayer(String url) {
         Activity currentActivity = getCurrentActivity();
         if (currentActivity != null) {
-            String path = url.replace("file://", "");
-            Uri uriForFile = FileProvider.getUriForFile(currentActivity,
-                    this.getReactApplicationContext().getPackageName() + ".provider", new File(path));
             Intent videoIntent = new Intent(Intent.ACTION_VIEW);
-            if (Build.VERSION.SDK_INT >= 24) {
+            if (url.indexOf("http") != 0 && Build.VERSION.SDK_INT >= 24) {
+                String path = url.replace("file://", "");
+                Uri uriForFile = FileProvider.getUriForFile(currentActivity,
+                        this.getReactApplicationContext().getPackageName() + ".provider", new File(path));
+
                 videoIntent.setDataAndType(uriForFile, "video/*");
 
                 // Set flag to give temporary permission to external app to use FileProvider
